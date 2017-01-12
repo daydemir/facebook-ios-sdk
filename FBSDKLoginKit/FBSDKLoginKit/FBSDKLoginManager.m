@@ -393,7 +393,7 @@ typedef NS_ENUM(NSInteger, FBSDKLoginManagerState) {
   switch (loginBehavior) {
     case FBSDKLoginBehaviorNative: {
       if ([FBSDKInternalUtility isFacebookAppInstalled]) {
-        BOOL useNativeDialog = [serverConfiguration useNativeDialogForDialogName:FBSDKDialogConfigurationNameLogin];
+        BOOL useNativeDialog = YES; //[serverConfiguration useNativeDialogForDialogName:FBSDKDialogConfigurationNameLogin];
         if (useNativeDialog) {
           [self performNativeLogInWithParameters:loginParams handler:^(BOOL openedURL, NSError *openedURLError) {
             if (openedURLError) {

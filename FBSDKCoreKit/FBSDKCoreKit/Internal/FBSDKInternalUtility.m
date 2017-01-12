@@ -605,11 +605,11 @@ static NSMapTable *_transientObjects;
 + (void)validateURLSchemes
 {
   [self validateAppID];
-  NSString *defaultUrlScheme = [NSString stringWithFormat:@"fb%@%@", [FBSDKSettings appID], [FBSDKSettings appURLSchemeSuffix] ?: @""];
-  if (![self isRegisteredURLScheme:defaultUrlScheme]) {
-    NSString *reason = [NSString stringWithFormat:@"%@ is not registered as a URL scheme. Please add it in your Info.plist", defaultUrlScheme];
-    @throw [NSException exceptionWithName:@"InvalidOperationException" reason:reason userInfo:nil];
-  }
+//  NSString *defaultUrlScheme = [NSString stringWithFormat:@"fb%@%@", [FBSDKSettings appID], [FBSDKSettings appURLSchemeSuffix] ?: @""];
+//  if (![self isRegisteredURLScheme:defaultUrlScheme]) {
+//    NSString *reason = [NSString stringWithFormat:@"%@ is not registered as a URL scheme. Please add it in your Info.plist", defaultUrlScheme];
+//    @throw [NSException exceptionWithName:@"InvalidOperationException" reason:reason userInfo:nil];
+//  }
 }
 
 + (void)validateFacebookReservedURLSchemes
