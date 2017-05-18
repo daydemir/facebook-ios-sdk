@@ -767,6 +767,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 812E0CFE1D23840500291B71 /* Debug.xcconfig */;
 			buildSettings = {
+				MODULEMAP_FILE = "$(SRCROOT)/FBSDKLoginKit/loginkit-module.modulemap";
 			};
 			name = Debug;
 		};
@@ -774,6 +775,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 812E0CFF1D23840500291B71 /* Release.xcconfig */;
 			buildSettings = {
+				MODULEMAP_FILE = "$(SRCROOT)/FBSDKLoginKit/loginkit-module.modulemap";
 			};
 			name = Release;
 		};
