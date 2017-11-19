@@ -43,7 +43,7 @@
 @implementation PlaceDetailViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+  [super viewDidLoad];
 
   self.title = self.place.title;
 
@@ -55,7 +55,7 @@
 
 - (void)loadAdditionalPlaceData
 {
-  FBSDKGraphRequest *request = [self.placesManger
+  FBSDKGraphRequest *request = [self.placesManager
                                 placeInfoRequestForPlaceID:self.place.placeID
                                 fields:@[FBSDKPlacesFieldKeyName, FBSDKPlacesFieldKeyAbout, FBSDKPlacesFieldKeyHours, FBSDKPlacesFieldKeyCoverPhoto, FBSDKPlacesFieldKeyWebsite, FBSDKPlacesFieldKeyLocation, FBSDKPlacesFieldKeyOverallStarRating, FBSDKPlacesFieldKeyPhone, FBSDKPlacesFieldKeyProfilePhoto]];
   [request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
@@ -70,7 +70,7 @@
 
 - (void)provideLocationFeedbackWasAtPlace:(BOOL)wasAtPlace
 {
-  FBSDKGraphRequest *request = [self.placesManger
+  FBSDKGraphRequest *request = [self.placesManager
                                 currentPlaceFeedbackRequestForPlaceID:self.place.placeID
                                 tracking:self.currentPlacesTrackingID
                                 wasHere:wasAtPlace];
@@ -82,16 +82,38 @@
 
 - (IBAction)websiteButtonClicked:(id)sender {
   if (self.place.website) {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.place.website] options:@{} completionHandler:NULL];
+    if ([[UIApplication sharedApplication] respondsToSelector:@selector(openURL:options:completionHandler:)]) { // Only available on iOS 10+
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.place.website] options:@{} completionHandler:NULL];
+    }
+    else {
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.place.website]];
+    }
   }
 }
 
-- (IBAction)yesButtonClicked:(id)sender {
+- (IBAction)yesButtonClicked:(id)sender
+{
+  [self showFeedbackAlertWithMessage:[NSString stringWithFormat:@"Thanks for confirming you're at %@!", self.place.title]];
   [self provideLocationFeedbackWasAtPlace:YES];
 }
 
-- (IBAction)noButtonClicked:(id)sender {
+- (IBAction)noButtonClicked:(id)sender
+{
+  [self showFeedbackAlertWithMessage:[NSString stringWithFormat:@"Thanks for letting us know you're not at %@!", self.place.title]];
   [self provideLocationFeedbackWasAtPlace:NO];
+}
+
+- (void)showFeedbackAlertWithMessage:(NSString *)message
+{
+  UIAlertController* alert = [UIAlertController alertControllerWithTitle:@"Feedback Submitted"
+                                                                 message:message
+                                                          preferredStyle:UIAlertControllerStyleAlert];
+
+  UIAlertAction* defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                        handler:NULL];
+
+  [alert addAction:defaultAction];
+  [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (void)refreshUI

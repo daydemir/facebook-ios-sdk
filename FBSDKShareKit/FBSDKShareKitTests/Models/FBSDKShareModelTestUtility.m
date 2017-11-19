@@ -68,11 +68,8 @@ NSString *kFBSDKShareModelTestUtilityOpenGraphStringKey = @"TEST:OPEN_GRAPH_STRI
 + (FBSDKShareLinkContent *)linkContentWithoutQuote
 {
   FBSDKShareLinkContent *linkContent = [[FBSDKShareLinkContent alloc] init];
-  linkContent.contentDescription = [self linkContentDescription];
-  linkContent.contentTitle = [self linkContentTitle];
   linkContent.contentURL = [self contentURL];
   linkContent.hashtag = [self hashtag];
-  linkContent.imageURL = [self linkImageURL];
   linkContent.peopleIDs = [self peopleIDs];
   linkContent.placeID = [self placeID];
   linkContent.ref = [self ref];
@@ -367,6 +364,27 @@ NSString *kFBSDKShareModelTestUtilityOpenGraphStringKey = @"TEST:OPEN_GRAPH_STRI
 {
   FBSDKShareMediaContent *content = [FBSDKShareMediaContent new];
   content.media = @[[self video], [self video]];
+  return content;
+}
+
++ (NSString *)cameraEffectID
+{
+  return @"1234567";
+}
+
++ (FBSDKCameraEffectArguments *)cameraEffectArguments
+{
+  FBSDKCameraEffectArguments *arguments = [FBSDKCameraEffectArguments new];
+  [arguments setString:@"A string argument" forKey:@"stringArg1"];
+  [arguments setString:@"Another string argument" forKey:@"stringArg2"];
+  return arguments;
+}
+
++ (FBSDKShareCameraEffectContent *)cameraEffectContent
+{
+  FBSDKShareCameraEffectContent *content = [FBSDKShareCameraEffectContent new];
+  content.effectID = [self cameraEffectID];
+  content.effectArguments = [self cameraEffectArguments];
   return content;
 }
 
